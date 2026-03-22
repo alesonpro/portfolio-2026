@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Zap, Layout, Code2, Brain, ArrowRight } from 'lucide-react'
+import { Zap, Layout, Code2, ArrowRight } from 'lucide-react'
 import FadeIn from './FadeIn'
 import { cn } from '@/lib/utils'
 import { cardStagger, blurUp, viewport } from '@/lib/animations'
@@ -28,14 +28,6 @@ const services = [
       'React + Tailwind web apps, Webflow sites, and Framer builds — fast, accessible, and optimized. I handle the full stack from design handoff to deployment.',
     highlights: ['React / Tailwind', 'Webflow / Framer', 'Performance-first'],
     color: 'text-blue-500 bg-blue-50 dark:bg-blue-500/10',
-  },
-  {
-    icon: Brain,
-    title: 'Workflow Consulting',
-    description:
-      'Workshop-style sessions to map your business processes, identify automation opportunities, and build a clear, prioritized roadmap your team can actually execute.',
-    highlights: ['Process mapping', 'Team training', 'ROI roadmap'],
-    color: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10',
   },
 ]
 

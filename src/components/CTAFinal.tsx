@@ -57,7 +57,7 @@ export default function CTAFinal() {
           className="flex flex-col sm:flex-row items-center gap-4 mt-4"
         >
           <a
-            href="mailto:hello@rolfa.dev"
+            href="mailto:rolfaleson.pro@gmail.com?subject=Book%20a%20Call&body=Hi%20Rolfa%2C%0A%0AI%27d%20like%20to%20book%20a%20call%20with%20you%20to%20discuss%20a%20project."
             className="liquid-glass-strong inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-body font-medium text-white hover:bg-white hover:text-black transition-all duration-300 group"
           >
             <Calendar size={16} strokeWidth={1.75} />
@@ -69,7 +69,7 @@ export default function CTAFinal() {
           </a>
 
           <a
-            href="mailto:hello@rolfa.dev"
+            href="mailto:rolfaleson.pro@gmail.com?subject=Let%27s%20Work%20Together"
             className="inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-body font-medium text-white/60 hover:text-white border border-white/15 hover:border-white/40 transition-all duration-300"
           >
             <Mail size={14} strokeWidth={1.75} />
