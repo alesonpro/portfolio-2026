@@ -110,7 +110,7 @@ export default function CTASection() {
           viewport={viewport}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
         >
-          <a href={`mailto:${EMAIL}?subject=Book%20a%20Call&body=Hi%20Rolfa%2C%0A%0AI%27d%20like%20to%20book%20a%20call%20with%20you%20to%20discuss%20a%20project.`} className="btn-accent text-base px-10 py-4 group">
+          <a href="https://calendly.com/alesongalvez/30min" target="_blank" rel="noopener noreferrer" className="btn-accent text-base px-10 py-4 group">
             <Calendar size={16} strokeWidth={1.75} />
             Book a Call
             <ArrowUpRight

@@ -18,15 +18,15 @@ const strengths = [
 ]
 
 const facts = [
-  { icon: GraduationCap, primary: 'BIT — Web Technologies', secondary: 'Digital Systems track' },
+  { icon: GraduationCap, primary: 'BSIT — Web Technologies', secondary: 'Digital Systems track' },
   { icon: Languages,     primary: 'English (fluent) & Italian (B2)', secondary: 'Works with international clients' },
   { icon: MapPin,        primary: 'Based in Europe', secondary: 'Works globally, fully remote' },
 ]
 
 const bio = [
-  "I'm a web technologies graduate (BIT, Web Technologies track) who turned a deep curiosity for efficiency into a freelance practice. Since 2025, I've been designing, automating, and shipping digital systems for small businesses, startups, and university projects.",
-  "My work lives at the intersection of automation engineering, UI/UX design, and strategic operations. I don't just hand you a tool — I hand you a system that fits your workflow and keeps running after I'm gone.",
-  "I've mentored teams on automation thinking, run process-mapping workshops, and helped businesses recover hundreds of hours from manual work. I'm most energized when a client says \"we had no idea this was possible.\"",
+  "I'm a web technologies graduate (BSIT, Web Technologies track) with a curiosity for how things can work better. Since the pandemic, I've been taking on freelance projects — mostly helping small businesses, startups, and university teams with automation, design, and web work.",
+  "I tend to work across automation, UI/UX, and operations depending on what the project needs. I try to leave things in a state that makes sense without me around.",
+  "Outside of work, I'm a gymrat — the gym is where I spend most of my free time.",
 ]
 
 export default function About() {
@@ -197,7 +197,7 @@ export default function About() {
                 Work with me
                 <ArrowUpRight size={14} strokeWidth={2.5} />
               </button>
-              <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <a href="/cv.pdf" download="RolfAlesonGalvez2026.pdf" rel="noopener noreferrer" className="btn-ghost">
                 Download CV
               </a>
             </motion.div>
