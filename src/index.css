@@ -31,7 +31,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior handled by Lenis */
   }
 
   html,
@@ -135,6 +135,29 @@
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
+}
+
+/* ─── Grain / Noise Overlay ─────────────────────────────────────────────── */
+
+.grain-overlay {
+  position: fixed;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: grainShift 0.35s steps(1) infinite;
+}
+
+@keyframes grainShift {
+  0%,  100% { transform: translate(0, 0);     }
+  20%        { transform: translate(-3%, 2%);  }
+  40%        { transform: translate(2%, -2%);  }
+  60%        { transform: translate(-2%, 3%);  }
+  80%        { transform: translate(3%, -1%);  }
 }
 
 /* ─── Micro-animation Keyframes ─────────────────────────────────────────── */

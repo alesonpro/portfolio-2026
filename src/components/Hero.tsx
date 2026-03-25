@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowUpRight, ChevronDown, Sparkles } from 'lucide-react'
+import MagneticButton from '@/components/MagneticButton'
+import SplitText from '@/components/SplitText'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -23,7 +25,11 @@ const shapes = [
   { id: 6, size: 38, x: '18%', y: '86%', rotate: -40, borderRadius: '50%', dur: 10, delay: 4   },
 ]
 
-export default function Hero() {
+interface HeroProps {
+  loaded?: boolean
+}
+
+export default function Hero({ loaded = false }: HeroProps) {
   const scrollTo = (href: string) =>
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
@@ -105,15 +111,12 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Heading */}
-        <motion.h1
-          {...fadeUp(0.15)}
-          className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight leading-[1.05] text-foreground text-balance"
-        >
-          Build Smarter.{' '}
-          <span className="text-accent">Launch Faster.</span>{' '}
-          Grow Effortlessly.
-        </motion.h1>
+        {/* Heading — kinetic character-by-character reveal (waits for preloader) */}
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight leading-[1.1] text-foreground text-balance">
+          <SplitText text="Build Smarter. " delay={0.1} animate={loaded} />
+          <SplitText text="Launch Faster. " delay={0.5} charClassName="text-accent" animate={loaded} />
+          <SplitText text="Grow Effortlessly." delay={0.9} animate={loaded} />
+        </h1>
 
         {/* Subheadline */}
         <motion.p
@@ -130,24 +133,28 @@ export default function Hero() {
           {...fadeUp(0.35)}
           className="flex flex-col sm:flex-row items-center gap-3 mt-2"
         >
-          <a
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); scrollTo('#contact') }}
-            className="btn-accent text-base px-8 py-3 group"
-          >
-            Start a Project
-            <ArrowUpRight
-              size={16}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-            />
-          </a>
-          <a
-            href="#work"
-            onClick={(e) => { e.preventDefault(); scrollTo('#work') }}
-            className="btn-ghost text-base px-8 py-3"
-          >
-            View My Work
-          </a>
+          <MagneticButton>
+            <a
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); scrollTo('#contact') }}
+              className="btn-accent text-base px-8 py-3 group"
+            >
+              Start a Project
+              <ArrowUpRight
+                size={16}
+                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              />
+            </a>
+          </MagneticButton>
+          <MagneticButton>
+            <a
+              href="#work"
+              onClick={(e) => { e.preventDefault(); scrollTo('#work') }}
+              className="btn-ghost text-base px-8 py-3"
+            >
+              View My Work
+            </a>
+          </MagneticButton>
         </motion.div>
 
         {/* Stats row */}

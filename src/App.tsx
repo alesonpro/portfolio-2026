@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import Lenis from 'lenis'
+import { AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/hooks/useTheme'
 import BackgroundEffects from '@/components/BackgroundEffects'
 import CustomCursor from '@/components/CustomCursor'
@@ -11,12 +14,37 @@ import About from '@/components/About'
 import Testimonials from '@/components/Testimonials'
 import CTASection from '@/components/CTASection'
 import Footer from '@/components/Footer'
+import Preloader from '@/components/Preloader'
 
 export default function App() {
   const { theme, toggle } = useTheme()
+  const [loaded, setLoaded] = useState(false)
+
+  // Lenis smooth scroll
+  useEffect(() => {
+    const lenis = new Lenis()
+    let rafId: number
+    function raf(time: number) {
+      lenis.raf(time)
+      rafId = requestAnimationFrame(raf)
+    }
+    rafId = requestAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+    }
+  }, [])
 
   return (
     <div className="bg-background text-foreground min-h-screen font-sans antialiased">
+      {/* Grain / noise overlay — fixed, above all content */}
+      <div className="grain-overlay" aria-hidden="true" />
+
+      {/* Preloader */}
+      <AnimatePresence>
+        {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
+      </AnimatePresence>
+
       {/* Custom cursor — above everything, outside stacking contexts */}
       <CustomCursor />
 
@@ -27,7 +55,7 @@ export default function App() {
       <div className="relative" style={{ zIndex: 1 }}>
         <Navbar theme={theme} toggleTheme={toggle} />
         <main>
-          <Hero />
+          <Hero loaded={loaded} />
           <TrustBar />
           <SkillsBar />
           <Services />

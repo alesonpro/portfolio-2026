@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, ArrowUpRight, Mail, Clock, Check } from 'lucide-react'
 import { viewport, blurUp, fadeUp, scaleIn, pillStagger, slideUpSmall } from '@/lib/animations'
+import MagneticButton from '@/components/MagneticButton'
 
 const EMAIL = 'rolfaleson.pro@gmail.com'
 const perks = ['Free 30-min call', 'No commitment required', 'Response within 24h']
@@ -110,31 +111,35 @@ export default function CTASection() {
           viewport={viewport}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
         >
-          <a href="https://calendly.com/alesongalvez/30min" target="_blank" rel="noopener noreferrer" className="btn-accent text-base px-10 py-4 group">
-            <Calendar size={16} strokeWidth={1.75} />
-            Book a Call
-            <ArrowUpRight
-              size={14}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform opacity-70"
-            />
-          </a>
-          <a
-            href={`mailto:${EMAIL}?subject=Let%27s%20Work%20Together`}
-            onClick={handleEmailClick}
-            className="btn-ghost text-base px-8 py-4 transition-all"
-          >
-            {copied ? (
-              <>
-                <Check size={15} strokeWidth={2} className="text-green-500" />
-                <span className="text-green-500">Email copied!</span>
-              </>
-            ) : (
-              <>
-                <Mail size={15} strokeWidth={1.75} />
-                Email me directly
-              </>
-            )}
-          </a>
+          <MagneticButton>
+            <a href="https://calendly.com/alesongalvez/30min" target="_blank" rel="noopener noreferrer" className="btn-accent text-base px-10 py-4 group">
+              <Calendar size={16} strokeWidth={1.75} />
+              Book a Call
+              <ArrowUpRight
+                size={14}
+                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform opacity-70"
+              />
+            </a>
+          </MagneticButton>
+          <MagneticButton>
+            <a
+              href={`mailto:${EMAIL}?subject=Let%27s%20Work%20Together`}
+              onClick={handleEmailClick}
+              className="btn-ghost text-base px-8 py-4 transition-all"
+            >
+              {copied ? (
+                <>
+                  <Check size={15} strokeWidth={2} className="text-green-500" />
+                  <span className="text-green-500">Email copied!</span>
+                </>
+              ) : (
+                <>
+                  <Mail size={15} strokeWidth={1.75} />
+                  Email me directly
+                </>
+              )}
+            </a>
+          </MagneticButton>
         </motion.div>
 
         {/* Email — fade in last */}

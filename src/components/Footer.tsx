@@ -5,6 +5,7 @@ const footerLinks = [
   { label: 'Services', href: '#services' },
   { label: 'Work', href: '#work' },
   { label: 'About', href: '#about' },
+  { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -42,9 +43,6 @@ export default function Footer() {
                 {link.label}
               </a>
             ))}
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">
-              Privacy
-            </a>
           </nav>
 
           {/* Back to top */}
