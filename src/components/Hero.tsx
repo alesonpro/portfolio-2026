@@ -143,7 +143,7 @@ export default function Hero({ loaded = false }: HeroProps) {
         </motion.div>
 
         {/* Heading — kinetic character-by-character reveal (waits for preloader) */}
-        <h1 className="text-[1.9rem] sm:text-4xl md:text-5xl lg:text-7xl font-heading font-bold tracking-tight leading-[1.1] text-foreground text-balance">
+        <h1 className="text-[1.95rem] sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight leading-[1.15] text-foreground text-balance">
           <SplitText text="Build Smarter. " delay={0.1} animate={loaded} />
           <SplitText text="Launch Faster. " delay={0.5} charClassName="text-accent" animate={loaded} />
           <SplitText text="Grow Effortlessly." delay={0.9} animate={loaded} />

@@ -47,7 +47,7 @@ export default function About() {
             className="flex flex-col items-center lg:items-start gap-8"
           >
             {/* Photo frame */}
-            <div className="relative self-center lg:self-start">
+            <div className="relative self-center lg:self-start w-[min(17rem,85vw)] md:w-[19rem]">
               <motion.div
                 className="absolute -inset-6 rounded-3xl pointer-events-none"
                 initial={{ opacity: 0 }}
@@ -61,37 +61,28 @@ export default function About() {
               />
 
               <motion.div
-                className="relative w-full max-w-[17rem] md:max-w-[19rem] rounded-2xl overflow-hidden border border-border shadow-card-hover"
-                style={{ height: 'clamp(16rem, 60vw, 22rem)' }}
-                initial={{ clipPath: 'inset(100% 0 0 0)' }}
-                whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
-                viewport={viewport}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                className="relative w-full rounded-2xl overflow-hidden border border-border shadow-card-hover"
+                style={{ height: 'clamp(16rem, 55vw, 22rem)' }}
+                initial={{ opacity: 0, scale: 0.96, y: 16 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: 'linear-gradient(160deg, hsl(221 83% 53% / 0.12) 0%, hsl(210 40% 96.1% / 1) 55%, hsl(221 83% 53% / 0.06) 100%)',
-                  }}
-                />
-                <div className="absolute inset-0 bg-dot-pattern opacity-[0.18]" />
-                <div
-                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(circle, hsl(221 83% 53% / 0.18) 0%, transparent 70%)' }}
-                />
-                <div
-                  className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(circle, hsl(221 83% 53% / 0.12) 0%, transparent 70%)' }}
-                />
                 <img
                   src={AVATAR_URL}
                   alt="Aleson — AI Automation & UI/UX Designer"
                   className="absolute inset-0 w-full h-full object-cover object-top"
                   loading="lazy"
                 />
+                {/* Subtle accent corner glow — theme-safe, very low opacity */}
+                <div
+                  className="absolute -top-8 -right-8 w-32 h-32 rounded-full pointer-events-none"
+                  style={{ background: 'radial-gradient(circle, hsl(221 83% 53% / 0.15) 0%, transparent 70%)' }}
+                />
+                {/* Bottom fade — uses CSS variable so it works in both themes */}
                 <div
                   className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
-                  style={{ background: 'linear-gradient(to top, hsl(210 40% 96.1% / 0.6) 0%, transparent 100%)' }}
+                  style={{ background: 'linear-gradient(to top, hsl(var(--background) / 0.55) 0%, transparent 100%)' }}
                 />
               </motion.div>
 
