@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Zap, Layout, Code2, ArrowRight } from 'lucide-react'
 import FadeIn from './FadeIn'
+import TiltCard from './TiltCard'
 import { cn } from '@/lib/utils'
 import { cardStagger, blurUp, viewport } from '@/lib/animations'
 
@@ -42,7 +43,7 @@ export default function Services() {
             <span className="section-label">What I Deliver</span>
           </FadeIn>
           <FadeIn direction="blur" delay={0.08}>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight text-foreground mt-2">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-foreground mt-2">
               Services built around{' '}
               <span className="text-accent">your growth</span>
             </h2>
@@ -75,39 +76,40 @@ export default function Services() {
           {services.map((service) => {
             const Icon = service.icon
             return (
-              <motion.div
-                key={service.title}
-                variants={blurUp}
-                className="portfolio-card p-7 h-full flex flex-col gap-5 group"
-              >
-                {/* Icon — springs up on card hover */}
-                <div className={cn(
-                  'w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-1',
-                  service.color,
-                )}>
-                  <Icon size={20} strokeWidth={1.75} />
-                </div>
+              <TiltCard key={service.title}>
+                <motion.div
+                  variants={blurUp}
+                  className="portfolio-card p-5 md:p-7 h-full flex flex-col gap-4 md:gap-5 group"
+                >
+                  {/* Icon — springs up on card hover */}
+                  <div className={cn(
+                    'w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-1',
+                    service.color,
+                  )}>
+                    <Icon size={20} strokeWidth={1.75} />
+                  </div>
 
-                <div className="flex-1">
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
+                  <div className="flex-1">
+                    <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
 
-                <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
-                  {service.highlights.map((h) => (
-                    <span
-                      key={h}
-                      className="text-xs font-medium text-muted-foreground bg-muted rounded-full px-3 py-1"
-                    >
-                      {h}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
+                    {service.highlights.map((h) => (
+                      <span
+                        key={h}
+                        className="text-xs font-medium text-muted-foreground bg-muted rounded-full px-3 py-1"
+                      >
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </TiltCard>
             )
           })}
         </motion.div>

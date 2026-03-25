@@ -24,7 +24,7 @@ export default function CTASection() {
   return (
     <section
       id="contact"
-      className="py-32 px-6 bg-gradient-to-br from-accent/5 via-background to-background relative overflow-hidden"
+      className="py-16 md:py-32 px-5 sm:px-6 bg-gradient-to-br from-accent/5 via-background to-background relative overflow-hidden"
     >
       {/* Ambient blob */}
       <div
@@ -69,7 +69,7 @@ export default function CTASection() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-foreground mt-2 text-balance"
+          className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-foreground mt-2 text-balance"
         >
           Ready to automate and elevate your{' '}
           <span className="text-accent">digital presence?</span>
@@ -112,7 +112,7 @@ export default function CTASection() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
         >
           <MagneticButton>
-            <a href="https://calendly.com/alesongalvez/30min" target="_blank" rel="noopener noreferrer" className="btn-accent text-base px-10 py-4 group">
+            <a href="https://calendly.com/alesongalvez/30min" target="_blank" rel="noopener noreferrer" className="btn-accent text-sm md:text-base px-7 md:px-10 py-3 md:py-4 group">
               <Calendar size={16} strokeWidth={1.75} />
               Book a Call
               <ArrowUpRight
@@ -125,7 +125,7 @@ export default function CTASection() {
             <a
               href={`mailto:${EMAIL}?subject=Let%27s%20Work%20Together`}
               onClick={handleEmailClick}
-              className="btn-ghost text-base px-8 py-4 transition-all"
+              className="btn-ghost text-sm md:text-base px-6 md:px-8 py-3 md:py-4 transition-all"
             >
               {copied ? (
                 <>

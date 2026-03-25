@@ -15,6 +15,7 @@ import Testimonials from '@/components/Testimonials'
 import CTASection from '@/components/CTASection'
 import Footer from '@/components/Footer'
 import Preloader from '@/components/Preloader'
+import SectionNav from '@/components/SectionNav'
 
 export default function App() {
   const { theme, toggle } = useTheme()
@@ -44,6 +45,9 @@ export default function App() {
       <AnimatePresence>
         {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
       </AnimatePresence>
+
+      {/* Section dot nav — fixed right side, desktop only */}
+      <SectionNav />
 
       {/* Custom cursor — above everything, outside stacking contexts */}
       <CustomCursor />

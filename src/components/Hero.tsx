@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ArrowUpRight, ChevronDown, Sparkles } from 'lucide-react'
 import MagneticButton from '@/components/MagneticButton'
 import SplitText from '@/components/SplitText'
@@ -30,13 +31,38 @@ interface HeroProps {
 }
 
 export default function Hero({ loaded = false }: HeroProps) {
+  const sectionRef = useRef<HTMLElement>(null)
   const scrollTo = (href: string) =>
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
+  // Mouse parallax — skip on touch devices
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const springX = useSpring(rawX, { stiffness: 60, damping: 20 })
+  const springY = useSpring(rawY, { stiffness: 60, damping: 20 })
+
+  const shapesX  = useTransform(springX, [-0.5, 0.5], [-20, 20])
+  const shapesY  = useTransform(springY, [-0.5, 0.5], [-20, 20])
+  const ringsX   = useTransform(springX, [-0.5, 0.5], [-10, 10])
+  const ringsY   = useTransform(springY, [-0.5, 0.5], [-10, 10])
+  const contentX = useTransform(springX, [-0.5, 0.5], [-4,  4])
+  const contentY = useTransform(springY, [-0.5, 0.5], [-4,  4])
+
+  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
+    if (!sectionRef.current) return
+    const rect = sectionRef.current.getBoundingClientRect()
+    rawX.set((e.clientX - rect.left) / rect.width  - 0.5)
+    rawY.set((e.clientY - rect.top)  / rect.height - 0.5)
+  }
+  function onMouseLeave() { rawX.set(0); rawY.set(0) }
+
   return (
     <section
+      ref={sectionRef}
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-6 overflow-hidden bg-gradient-to-br from-background via-background to-muted/30"
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-12 md:pt-24 md:pb-16 px-5 sm:px-6 overflow-hidden bg-gradient-to-br from-background via-background to-muted/30"
     >
       {/* Dot pattern */}
       <div className="absolute inset-0 bg-dot-pattern opacity-[0.35] dark:opacity-[0.15] pointer-events-none" />
@@ -57,7 +83,7 @@ export default function Hero({ loaded = false }: HeroProps) {
         }}
       />
 
-      {/* ── Floating geometric shapes ── */}
+      {/* ── Floating geometric shapes (parallax layer fast) ── */}
       {shapes.map((s) => (
         <motion.div
           key={s.id}
@@ -69,6 +95,8 @@ export default function Hero({ loaded = false }: HeroProps) {
             top: s.y,
             borderRadius: s.borderRadius,
             willChange: 'transform',
+            x: shapesX,
+            y: shapesY,
           }}
           initial={{ opacity: 0, rotate: s.rotate }}
           animate={{
@@ -86,22 +114,25 @@ export default function Hero({ loaded = false }: HeroProps) {
         />
       ))}
 
-      {/* ── Animated ring behind heading ── */}
+      {/* ── Animated rings (parallax layer medium) ── */}
       <motion.div
         className="absolute rounded-full border border-accent/8 pointer-events-none"
-        style={{ width: 560, height: 560 }}
+        style={{ width: 560, height: 560, x: ringsX, y: ringsY }}
         animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         className="absolute rounded-full border border-accent/5 pointer-events-none"
-        style={{ width: 760, height: 760 }}
+        style={{ width: 760, height: 760, x: ringsX, y: ringsY }}
         animate={{ scale: [1.04, 1, 1.04], opacity: [0.3, 0.55, 0.3] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-6">
+      {/* Content (parallax layer slow) */}
+      <motion.div
+        style={{ x: contentX, y: contentY }}
+        className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-4 md:gap-6"
+      >
 
         {/* Badge */}
         <motion.div {...fadeUp(0.05)}>
@@ -112,7 +143,7 @@ export default function Hero({ loaded = false }: HeroProps) {
         </motion.div>
 
         {/* Heading — kinetic character-by-character reveal (waits for preloader) */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight leading-[1.1] text-foreground text-balance">
+        <h1 className="text-[1.9rem] sm:text-4xl md:text-5xl lg:text-7xl font-heading font-bold tracking-tight leading-[1.1] text-foreground text-balance">
           <SplitText text="Build Smarter. " delay={0.1} animate={loaded} />
           <SplitText text="Launch Faster. " delay={0.5} charClassName="text-accent" animate={loaded} />
           <SplitText text="Grow Effortlessly." delay={0.9} animate={loaded} />
@@ -121,7 +152,7 @@ export default function Hero({ loaded = false }: HeroProps) {
         {/* Subheadline */}
         <motion.p
           {...fadeUp(0.25)}
-          className="text-lg md:text-xl text-muted-foreground font-normal leading-relaxed max-w-2xl mx-auto text-balance"
+          className="text-base md:text-lg lg:text-xl text-muted-foreground font-normal leading-relaxed max-w-2xl mx-auto text-balance"
         >
           I create intelligent automation systems and clean, high-converting digital
           experiences for small businesses, startups, and creators — saving you time
@@ -160,7 +191,7 @@ export default function Hero({ loaded = false }: HeroProps) {
         {/* Stats row */}
         <motion.div
           {...fadeUp(0.45)}
-          className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mt-6 pt-6 border-t border-border w-full"
+          className="flex flex-wrap items-center justify-center gap-x-6 md:gap-x-10 gap-y-4 mt-4 md:mt-6 pt-4 md:pt-6 border-t border-border w-full"
         >
           {stats.map((s) => (
             <div key={s.label} className="flex flex-col items-center gap-0.5">
@@ -169,7 +200,7 @@ export default function Hero({ loaded = false }: HeroProps) {
             </div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll cue */}
       <motion.button

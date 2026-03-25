@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, CheckCircle, Zap, Globe, Palette, Mail } from 'lucide-react'
 import FadeIn from './FadeIn'
+import TiltCard from './TiltCard'
 import { cn } from '@/lib/utils'
 import { pillStagger, slideUpSmall, viewport } from '@/lib/animations'
 import CaseStudyModal from './CaseStudyModal'
@@ -596,8 +597,8 @@ export default function Work() {
             {visible.map((p, i) => {
               const Icon = p.icon
               return (
+                <TiltCard key={p.id} strength={8}>
                 <motion.div
-                  key={p.id}
                   layout
                   variants={cardVariants}
                   initial="hidden"
@@ -654,6 +655,7 @@ export default function Work() {
                     </button>
                   </div>
                 </motion.div>
+                </TiltCard>
               )
             })}
           </AnimatePresence>

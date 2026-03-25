@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sun, Moon, Menu, X, ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import ScrambleText from '@/components/ScrambleText'
 
 interface NavbarProps {
   theme: 'light' | 'dark'
@@ -59,7 +60,7 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
                 onClick={(e) => { e.preventDefault(); scrollTo(link.href) }}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-150 relative group"
               >
-                {link.label}
+                <ScrambleText text={link.label} />
                 <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent rounded-full group-hover:w-full transition-all duration-250" />
               </a>
             ))}

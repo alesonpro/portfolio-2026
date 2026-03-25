@@ -60,7 +60,7 @@ export default function TrustBar() {
           viewport={viewport}
           className="flex justify-center"
         >
-          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-background border border-border shadow-soft">
+          <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 px-5 py-3 rounded-full bg-background border border-border shadow-soft">
             <span className="flex -space-x-2">
               {['bg-indigo-500', 'bg-violet-500', 'bg-blue-500'].map((c, i) => (
                 <span

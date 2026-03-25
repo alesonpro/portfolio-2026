@@ -75,12 +75,12 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div className="mb-14 text-center">
+        <div className="mb-10 md:mb-14 text-center">
           <FadeIn direction="blur">
             <span className="section-label">Testimonials</span>
           </FadeIn>
           <FadeIn direction="blur" delay={0.08}>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight text-foreground mt-2">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-foreground mt-2">
               What clients say
             </h2>
           </FadeIn>
@@ -105,7 +105,7 @@ export default function Testimonials() {
               }}
               initial="hidden"
               animate={cardsInView ? 'visible' : 'hidden'}
-              className="portfolio-card p-7 h-full flex flex-col gap-5"
+              className="portfolio-card p-5 md:p-7 h-full flex flex-col gap-4 md:gap-5"
             >
               {/* Stars + quote icon */}
               <div className="flex items-center justify-between">

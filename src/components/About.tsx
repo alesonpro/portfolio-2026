@@ -38,7 +38,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
-          {/* ── Left: Photo — slides in from left ── */}
+          {/* ── Left: Photo ── */}
           <motion.div
             variants={fadeLeft}
             initial="hidden"
@@ -48,17 +48,25 @@ export default function About() {
           >
             {/* Photo frame */}
             <div className="relative self-center lg:self-start">
-              <div
+              <motion.div
                 className="absolute -inset-6 rounded-3xl pointer-events-none"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={viewport}
+                transition={{ delay: 0.3, duration: 0.7 }}
                 style={{
                   background: 'radial-gradient(ellipse at 40% 30%, hsl(221 83% 53% / 0.14) 0%, transparent 70%)',
                   filter: 'blur(24px)',
                 }}
               />
 
-              <div
-                className="relative w-[17rem] md:w-[19rem] rounded-2xl overflow-hidden border border-border shadow-card-hover"
-                style={{ height: '22rem' }}
+              <motion.div
+                className="relative w-full max-w-[17rem] md:max-w-[19rem] rounded-2xl overflow-hidden border border-border shadow-card-hover"
+                style={{ height: 'clamp(16rem, 60vw, 22rem)' }}
+                initial={{ clipPath: 'inset(100% 0 0 0)' }}
+                whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
+                viewport={viewport}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div
                   className="absolute inset-0"
@@ -85,7 +93,7 @@ export default function About() {
                   className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
                   style={{ background: 'linear-gradient(to top, hsl(210 40% 96.1% / 0.6) 0%, transparent 100%)' }}
                 />
-              </div>
+              </motion.div>
 
               {/* Available badge — springs up after photo */}
               <motion.div
@@ -137,7 +145,7 @@ export default function About() {
                 <span className="section-label">About Me</span>
               </FadeIn>
               <FadeIn direction="blur" delay={0.12}>
-                <h2 className="text-4xl md:text-5xl font-heading font-bold tracking-tight text-foreground mt-3 leading-tight">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-foreground mt-3 leading-tight">
                   Hi, I'm Aleson —{' '}
                   <span className="text-accent">builder, solver,</span>{' '}
                   systems thinker.
