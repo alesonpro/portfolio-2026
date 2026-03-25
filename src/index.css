@@ -125,6 +125,11 @@
     background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
     background-size: 24px 24px;
   }
+
+  .scroll-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
 }
 
 /* ─── Micro-animation Keyframes ─────────────────────────────────────────── */

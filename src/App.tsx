@@ -4,6 +4,7 @@ import CustomCursor from '@/components/CustomCursor'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import TrustBar from '@/components/TrustBar'
+import SkillsBar from '@/components/SkillsBar'
 import Services from '@/components/Services'
 import Work from '@/components/Work'
 import About from '@/components/About'
@@ -28,6 +29,7 @@ export default function App() {
         <main>
           <Hero />
           <TrustBar />
+          <SkillsBar />
           <Services />
           <Work />
           <About />
