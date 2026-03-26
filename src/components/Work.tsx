@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, CheckCircle, Zap, Globe, Palette, Mail } from 'lucide-react'
+import { ArrowUpRight, CheckCircle, Zap, Globe, Palette, Mail, Layers, ChevronDown, Check } from 'lucide-react'
 import FadeIn from './FadeIn'
 import TiltCard from './TiltCard'
 import { cn } from '@/lib/utils'
@@ -11,7 +11,7 @@ import CaseStudyModal from './CaseStudyModal'
 type Category = 'All' | 'AI Automations' | 'Website Creation' | 'UI/UX Design' | 'Email Design'
 
 const filters: { label: Category; icon: React.ElementType }[] = [
-  { label: 'All',             icon: Zap     },
+  { label: 'All',             icon: Layers  },
   { label: 'AI Automations',  icon: Zap     },
   { label: 'Website Creation',icon: Globe   },
   { label: 'UI/UX Design',    icon: Palette },
@@ -499,6 +499,18 @@ export default function Work() {
   const [active, setActive] = useState<Category>('All')
   const [showAll, setShowAll] = useState(false)
   const [selectedProject, setSelectedProject] = useState<typeof projects[number] | null>(null)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
 
   const filtered = active === 'All'
     ? projects
@@ -543,18 +555,76 @@ export default function Work() {
           />
         </div>
 
-        {/* ── Filter tabs — stagger in from left ── */}
+        {/* ── Filter — dropdown on mobile, pills on desktop ── */}
+
+        {/* Mobile: compact dropdown */}
+        {(() => {
+          const ActiveIcon = filters.find(f => f.label === active)!.icon
+          const activeCount = active === 'All' ? projects.length : projects.filter(p => p.filter === active).length
+          return (
+            <div className="relative sm:hidden mb-10" ref={dropdownRef}>
+              <button
+                onClick={() => setDropdownOpen(o => !o)}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border bg-accent text-accent-foreground border-accent shadow-sm"
+              >
+                <ActiveIcon size={13} strokeWidth={2} className="shrink-0" />
+                {active}
+                <span className="text-xs rounded-full px-1.5 py-0.5 font-semibold leading-none bg-white/20 text-white">
+                  {activeCount}
+                </span>
+                <ChevronDown size={13} strokeWidth={2} className={cn('shrink-0 transition-transform duration-200', dropdownOpen && 'rotate-180')} />
+              </button>
+
+              <AnimatePresence>
+                {dropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-full left-0 mt-2 w-56 rounded-xl border border-border bg-background shadow-xl z-10 overflow-hidden py-1"
+                  >
+                    {filters.map(({ label, icon: Icon }) => {
+                      const isActive = active === label
+                      const count = label === 'All' ? projects.length : projects.filter(p => p.filter === label).length
+                      return (
+                        <button
+                          key={label}
+                          onClick={() => { handleFilterChange(label); setDropdownOpen(false) }}
+                          className={cn(
+                            'w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors',
+                            isActive ? 'text-accent bg-accent/5' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                          )}
+                        >
+                          <Icon size={13} strokeWidth={2} className="shrink-0" />
+                          <span className="flex-1 text-left">{label}</span>
+                          <span className={cn('text-xs rounded-full px-1.5 py-0.5 font-semibold leading-none', isActive ? 'bg-accent/15 text-accent' : 'bg-muted text-muted-foreground')}>
+                            {count}
+                          </span>
+                          {isActive && <Check size={12} strokeWidth={2.5} className="shrink-0 text-accent" />}
+                        </button>
+                      )
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )
+        })()}
+
+        {/* Desktop: pill strip */}
         <motion.div
           variants={pillStagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="flex flex-wrap gap-2 mb-10"
+          className="hidden sm:flex flex-wrap gap-2 mb-10"
         >
           {filters.map(({ label, icon: Icon }) => {
-              const isActive = active === label
-              return (
-                <motion.div key={label} variants={slideUpSmall}>
+            const isActive = active === label
+            const count = label === 'All' ? projects.length : projects.filter((p) => p.filter === label).length
+            return (
+              <motion.div key={label} variants={slideUpSmall}>
                 <button
                   onClick={() => handleFilterChange(label)}
                   className={cn(
@@ -564,28 +634,15 @@ export default function Work() {
                       : 'bg-background text-muted-foreground border-border hover:border-accent/40 hover:text-foreground hover:bg-accent/5',
                   )}
                 >
-                  {/* Only show icon for non-All tabs, since All reuses the Zap icon */}
-                  {label !== 'All' && (
-                    <Icon size={13} strokeWidth={2} className="shrink-0" />
-                  )}
+                  <Icon size={13} strokeWidth={2} className="shrink-0" />
                   {label}
-                  {/* Count badge */}
-                  <span
-                    className={cn(
-                      'text-xs rounded-full px-1.5 py-0.5 font-semibold leading-none',
-                      isActive
-                        ? 'bg-white/20 text-white'
-                        : 'bg-muted text-muted-foreground',
-                    )}
-                  >
-                    {label === 'All'
-                      ? projects.length
-                      : projects.filter((p) => p.filter === label).length}
+                  <span className={cn('text-xs rounded-full px-1.5 py-0.5 font-semibold leading-none', isActive ? 'bg-white/20 text-white' : 'bg-muted text-muted-foreground')}>
+                    {count}
                   </span>
                 </button>
               </motion.div>
-              )
-            })}
+            )
+          })}
         </motion.div>
 
         {/* ── Projects grid ── */}

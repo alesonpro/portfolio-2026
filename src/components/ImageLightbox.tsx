@@ -15,8 +15,15 @@ export default function ImageLightbox({ src, alt, open, onClose }: Props) {
       if (e.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [onClose])
+
+    const preventBodyScroll = (e: TouchEvent) => e.preventDefault()
+    if (open) document.body.addEventListener('touchmove', preventBodyScroll, { passive: false })
+
+    return () => {
+      document.removeEventListener('keydown', handler)
+      document.body.removeEventListener('touchmove', preventBodyScroll)
+    }
+  }, [onClose, open])
 
   return (
     <AnimatePresence>
@@ -27,8 +34,10 @@ export default function ImageLightbox({ src, alt, open, onClose }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[60] bg-black/90 overflow-y-auto"
+          className="fixed inset-0 z-[60] bg-black/90 overflow-y-auto overscroll-contain"
           onClick={onClose}
+          onTouchMove={(e) => e.stopPropagation()}
+          data-lenis-prevent
         >
           {/* Close button */}
           <button

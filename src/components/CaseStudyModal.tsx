@@ -42,14 +42,19 @@ export default function CaseStudyModal({ project, onClose }: Props) {
     return () => document.removeEventListener('keydown', handler)
   }, [onClose])
 
-  // Prevent body scroll when open
+  // Prevent body scroll when open (also pause Lenis)
   useEffect(() => {
     if (project) {
       document.body.style.overflow = 'hidden'
+      window.dispatchEvent(new Event('lenis:stop'))
     } else {
       document.body.style.overflow = ''
+      window.dispatchEvent(new Event('lenis:start'))
     }
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+      window.dispatchEvent(new Event('lenis:start'))
+    }
   }, [project])
 
   // Reset lightbox when drawer closes or project changes
@@ -114,7 +119,7 @@ export default function CaseStudyModal({ project, onClose }: Props) {
             </div>
 
             {/* Scrollable content */}
-            <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-6 flex flex-col gap-6" data-lenis-prevent>
 
               {/* Preview — iframe for websites, image for everything else */}
               {project.link ? (
@@ -140,7 +145,7 @@ export default function CaseStudyModal({ project, onClose }: Props) {
                     className="self-start inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-accent transition-colors group"
                   >
                     <Maximize2 size={11} strokeWidth={2} />
-                    View Full Design
+                    {project.category.startsWith('AI Automations') ? 'View Automation' : 'View Full Design'}
                   </button>
                 </div>
               ) : null}

@@ -30,9 +30,17 @@ export default function App() {
       rafId = requestAnimationFrame(raf)
     }
     rafId = requestAnimationFrame(raf)
+
+    const stop = () => lenis.stop()
+    const start = () => lenis.start()
+    window.addEventListener('lenis:stop', stop)
+    window.addEventListener('lenis:start', start)
+
     return () => {
       cancelAnimationFrame(rafId)
       lenis.destroy()
+      window.removeEventListener('lenis:stop', stop)
+      window.removeEventListener('lenis:start', start)
     }
   }, [])
 
