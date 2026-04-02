@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { GraduationCap, MapPin, Languages, ArrowUpRight } from 'lucide-react'
+import { GraduationCap, MapPin, Languages, ArrowUpRight, Youtube } from 'lucide-react'
 import FadeIn from './FadeIn'
 import {
   fadeLeft, fadeRight, pillStagger,
@@ -198,6 +198,10 @@ export default function About() {
               </button>
               <a href="/cv.pdf" download="RolfAlesonGalvez2026.pdf" rel="noopener noreferrer" className="btn-ghost">
                 Download CV
+              </a>
+              <a href="https://youtu.be/-451Xsn1qQM" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                <Youtube size={14} strokeWidth={2.5} />
+                Watch Intro
               </a>
             </motion.div>
           </motion.div>
