@@ -18,7 +18,7 @@ const strengths = [
 ]
 
 const facts = [
-  { icon: GraduationCap, primary: 'BSIT — Web Technologies', secondary: 'Digital Systems track' },
+  { icon: GraduationCap, primary: 'BS — Information Technology', secondary: 'Web Technologies Track' },
   { icon: Languages,     primary: 'English (fluent) & Italian (B2)', secondary: 'Works with international clients' },
   { icon: MapPin,        primary: 'Based in Europe', secondary: 'Works globally, fully remote' },
 ]
